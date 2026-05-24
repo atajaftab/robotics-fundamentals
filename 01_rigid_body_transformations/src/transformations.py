@@ -187,6 +187,11 @@ def transform_point(T: np.ndarray, point: np.ndarray) -> np.ndarray:
     ValueError
         If T does not have shape 4x4.
     """
+    T = np.asarray(T, dtype=float)
+
+    if T.shape != (4,4):
+        raise ValueError("T must have shape (4,4).")
+    
     point = np.asarray(point, dtype=float).reshape(3)
     point_h = np.array([point[0], point[1], point[2], 1.0])
     transformed = T @ point_h
