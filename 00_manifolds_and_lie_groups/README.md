@@ -2,42 +2,50 @@
 
 ## Goal
 
-This part provides a visual and intuitive introduction to differentiable manifolds
-and Lie groups in the context of robotics.
+The goal of this project is to understand why rotation matrices and rigid-body
+transformations are not ordinary vectors,
+but elements of structured spaces called manifolds and Lie groups.
 
-The motivation is to understand that rotation matrices are not just arbitrary matrices.
-They must satisfy special constraints, and the set of all valid rotation matrices
-forms a structured space.
-In robotics, these spaces are examples of Lie groups.
+## Core idea
 
-## Background
+A manifold is a space that may be curved or constrained globally,
+but locally looks like Euclidean space.
 
-A differentiable manifold is a space that may be curved globally,
-but locally behaves like ordinary Euclidean space.
+The dimension of a manifold is the number of independent local coordinates
+needed to describe a point on it,
+not necessarily the dimension of the space in which it is embedded.
 
-For example, a circle is not globally the same as a straight line.
-However, if we zoom in on a small part of the circle, it locally looks like a one-dimensional line.
-Similarly, a sphere is a curved two-dimensional surface, but a small neighborhood on the sphere locally
-looks like a flat two-dimensional plane.
+For example, the surface of a sphere is embedded in three-dimensional space,
+but it is a two-dimensional manifold because a local point on the surface can be described using two independent coordinates.
 
-This local Euclidean structure makes it possible to use calculus on curved spaces.
+## Why this matters for robotics
 
-## Why this matters in robotics
-
-Rotation matrices in 2D and 3D belong to special matrix groups:
+Rotation matrices in 3D belong to the special orthogonal group:
 
 $$
-SO(2) = \{R \in \mathbb{R}^{2 \times 2} \mid R^T R = I,\ \det(T)=1 \}
+SO(3) = \{R \in \mathbb{R}^{3 \times 3} \mid R^T R = I,\ \det(R)=1\}
 $$
 
-$$
-SO(3) = \{R \in \mathbb{R}^{3 \times 3} \mid R^T R = I,\ \det(T)=1 \}
-$$
+Although a 3D rotation matrix has nine entries, these entries are constrained.
+The space of valid 3D rotations has only three degrees of freedom.
 
-These sets are not ordinary vector spaces.
-For example, adding two rotation matrices does not generally produce another valid rotation matrix.
+Therefore, rotations should not be treated as arbitrary matrices or vectors.
+Instead, small changes in rotation are often represented in a local tangent space
+and mapped back to the rotation group using the exponential map.
 
-Instead, rotations form Lie groups: spaces that are both groups and differentiable manifolds.
+## Planned demonstrations
 
-This is important because robot motion, orientation interpolation,
-angular velocity, and rigid-body transformations all rely on moving smoothly on these curved spaces.
+1. **Embedding dimension vs. intrinsic dimension**  
+   Show that an object can live in a higher-dimensional space while requiring fewer independent coordinates to describe motion on it.
+
+2. **Sphere surface as a 2D manifold embedded in 3D**  
+   Show that points constrained to the surface of a sphere need only two local coordinates, even though the sphere is embedded in three-dimensional space.
+
+3. **Rotation matrices are constrained objects**  
+   Show that adding two valid rotation matrices does not generally produce another valid rotation matrix, while multiplying/composing them does.
+
+4. **Local updates on SO(3) using the exponential map**  
+   Show that small rotation vectors in a local tangent space can be mapped back to valid rotation matrices using the exponential map.
+
+Together, these demonstrations connect the abstract idea of differentiable manifolds
+to a practical robotics problem: representing and updating orientations without leaving the space of valid rotations.
