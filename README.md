@@ -4,6 +4,7 @@ This repository documents my implementation-focused study of robotics fundamenta
 
 ## Projects
 
+0. Manifolds and Lie groups (under implementation)
 1. Rigid-body transformations (under implementation)
 2. Forward kinematics and Jacobians (not implemented yet)
 3. Inverse kinematics (not implemented yet)
