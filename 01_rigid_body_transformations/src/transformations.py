@@ -196,3 +196,37 @@ def transform_point(T: np.ndarray, point: np.ndarray) -> np.ndarray:
     point_h = np.array([point[0], point[1], point[2], 1.0])
     transformed = T @ point_h
     return transformed[:3]
+
+def transform_vector(T: np.ndarray, vector: np.ndarray) -> np.ndarray:
+    """
+    Transform a 3D free vector using a homogeneous transformation matrix.
+
+    A free vector is affected by rotation but not translation. Therefore,
+    only the rotation part of the homogeneous transformation is applied.
+
+    Parameters
+    ----------
+    T : np.ndarray
+        A 4x4 homogeneous transformation matrix.
+    vector : np.ndarray
+        A 3D vector.
+
+    Returns
+    -------
+    np.ndarray
+        The transformed 3D vector.
+
+    Raises
+    ------
+    ValueError
+        If T does not have shape (4, 4).
+    """
+    T = np.asarray(T, dtype=float)
+
+    if T.shape != (4, 4):
+        raise ValueError("T must have shape (4, 4).")
+
+    vector = np.asarray(vector, dtype=float).reshape(3)
+
+    R = T[:3, :3]
+    return R @ vector
